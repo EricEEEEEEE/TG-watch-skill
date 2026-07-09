@@ -101,6 +101,30 @@ python3 scripts/render_anchor_price_card.py \
 
 Then send `/tmp/anchor-card.png` with the caption generated from the same inputs.
 
+Rendering notes:
+
+- Light theme by default (matches the FAB card visual language). Pass `--theme dark` for the original dark card.
+- `--width` sets canvas width (default 1200); height is computed automatically from the content.
+- Chinese / CJK text renders correctly — the layout layer auto-selects a CJK font (Hiragino / STHeiti / Noto) for any string that contains CJK, and Helvetica / Arial for Latin-only strings.
+
+## Rendering engine
+
+The card is drawn with `scripts/layout.py`, a thin declarative layout layer over
+Pillow. There is **no browser, Node, or system-library dependency** — only Pillow.
+
+Cards are described as a tree of nodes (`Column`, `Row`, `Text`, `Bar`,
+`stat_box`, `bar_row`) with padding, gap, and rounded panels; positions are
+computed rather than hand-written as pixel coordinates. To add a new card type,
+compose these nodes and call `layout.render_card(...)`. The node reference lives
+in `references/rendering.md`.
+
 ## Reference
 
 For the field schema and example card anatomy, read `references/anchor-price-card.md`.
+
+## Changelog
+
+- **v0.2.0** — Rewrote rendering onto the zero-dependency `layout.py` layout layer
+  (declarative nodes, no absolute pixel math). Added a light theme (now default),
+  a `--theme` / `--width` flag, and content-aware CJK font selection.
+- **v0.1.0** — Initial anchor-price card (dark, hand-placed Pillow coordinates).

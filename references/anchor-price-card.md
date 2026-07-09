@@ -72,3 +72,18 @@ Avoid:
 - "risk-free"
 - unlabeled fair-value methods
 - numbers with no source or timestamp
+
+## Rendering
+
+The card is produced by `scripts/render_anchor_price_card.py`, which composes the
+declarative nodes in `scripts/layout.py` (see `references/rendering.md`). Only
+Pillow is required — no browser, Node, or system libraries.
+
+- Default theme is light; `--theme dark` restores the original dark card.
+- The left rail and the discount/premium value take the severity color
+  (P0 red, P1 amber, P2 blue).
+- `HEDGE` is colored by value (YES green, PARTIAL amber, NO red).
+- Card height is computed from content, so adding or removing a field never
+  requires recomputing coordinates.
+- CJK strings (e.g. a Chinese venue or source note) render with a CJK font
+  automatically; Latin-only strings use Helvetica/Arial.
