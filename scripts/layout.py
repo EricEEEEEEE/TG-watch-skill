@@ -92,35 +92,51 @@ def _line_h(font: ImageFont.FreeTypeFont) -> int:
 
 
 def wrap_text(text: str, size: int, bold: bool, max_w: int, max_lines: int) -> list:
-    """CJK-aware greedy wrap with trailing ellipsis when truncated."""
+    """CJK-aware greedy wrap. Splits on hard newlines and adds a trailing ellipsis when truncated."""
     font = pick_font(text, size, bold)
-    if _text_w(text, font) <= max_w and "\n" not in text:
+    # The "\n" check MUST short-circuit before _text_w(): Pillow's textlength()
+    # raises ValueError on any string containing a newline, so measuring first
+    # would crash before the guard could skip it.
+    if "\n" not in text and _text_w(text, font) <= max_w:
         return [text]
     cjk = _has_cjk(text)
-    units = list(text) if cjk else text.split(" ")
     joiner = "" if cjk else " "
     lines: list = []
-    cur = ""
-    for unit in units:
-        cand = unit if not cur else f"{cur}{joiner}{unit}"
-        if _text_w(cand, font) <= max_w:
-            cur = cand
-            continue
-        if cur:
-            lines.append(cur)
-        cur = unit
+    truncated = False
+    for segment in text.split("\n"):
         if len(lines) >= max_lines:
+            truncated = True
             break
-    if cur and len(lines) < max_lines:
-        lines.append(cur)
-    if len(lines) >= max_lines:
+        if segment == "":
+            lines.append("")
+            continue
+        units = list(segment) if cjk else segment.split(" ")
+        cur = ""
+        for unit in units:
+            cand = unit if not cur else f"{cur}{joiner}{unit}"
+            if _text_w(cand, font) <= max_w:
+                cur = cand
+                continue
+            if cur:
+                lines.append(cur)
+                if len(lines) >= max_lines:
+                    cur = ""
+                    truncated = True
+                    break
+            cur = unit
+        if cur:
+            if len(lines) < max_lines:
+                lines.append(cur)
+            else:
+                truncated = True
+    if len(lines) > max_lines:
         lines = lines[:max_lines]
-        rendered = joiner.join(lines)
-        if len(rendered) < len(text):
-            tail = lines[-1].rstrip("。., ")
-            while tail and _text_w(tail + "…", font) > max_w:
-                tail = tail[:-1]
-            lines[-1] = tail + "…"
+        truncated = True
+    if truncated and lines:
+        tail = lines[-1].rstrip("。., ")
+        while tail and _text_w(tail + "…", font) > max_w:
+            tail = tail[:-1]
+        lines[-1] = tail + "…"
     return lines or [""]
 
 
@@ -229,8 +245,13 @@ class Text(Node):
         return wrap_text(str(self.text), self.size, self.bold, w, self.max_lines)
 
     def measure(self, draw, w):
-        font = pick_font(str(self.text), self.size, self.bold)
-        return int(_line_h(font) * self.leading * len(self._lines(w)))
+        # Sum per-line font metrics so mixed Latin/CJK lines match render() exactly
+        # (each line may resolve to a different font with a different line height).
+        total = 0
+        for line in self._lines(w):
+            font = pick_font(line, self.size, self.bold)
+            total += int(_line_h(font) * self.leading)
+        return total
 
     def render(self, draw, x, y, w):
         lines = self._lines(w)
