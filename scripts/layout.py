@@ -52,12 +52,43 @@ _CJK_BOLD = [
     "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc",
     "/System/Library/Fonts/Supplemental/Arial Unicode.ttf",
 ]
+_HANGUL_REGULAR = [
+    "/System/Library/Fonts/AppleSDGothicNeo.ttc",
+    "/System/Library/Fonts/Supplemental/AppleGothic.ttf",
+    "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+    "/usr/share/fonts/truetype/nanum/NanumGothic.ttf",
+] + _CJK_REGULAR
+_HANGUL_BOLD = [
+    "/System/Library/Fonts/AppleSDGothicNeo.ttc",
+    "/System/Library/Fonts/Supplemental/AppleGothic.ttf",
+    "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc",
+    "/usr/share/fonts/truetype/nanum/NanumGothicBold.ttf",
+] + _CJK_BOLD
+
+
+def _has_hangul(text: str) -> bool:
+    return any(
+        0x1100 <= ord(ch) <= 0x11FF
+        or 0x3130 <= ord(ch) <= 0x318F
+        or 0xAC00 <= ord(ch) <= 0xD7AF
+        for ch in text
+    )
 
 
 def _has_cjk(text: str) -> bool:
     for ch in text:
         o = ord(ch)
-        if 0x4E00 <= o <= 0x9FFF or 0x3400 <= o <= 0x4DBF or 0x3000 <= o <= 0x30FF or 0xFF00 <= o <= 0xFFEF:
+        if (
+            0x1100 <= o <= 0x11FF
+            or 0x3130 <= o <= 0x318F
+            or 0xAC00 <= o <= 0xD7AF
+            or 0x3000 <= o <= 0x30FF
+            or 0x3400 <= o <= 0x4DBF
+            or 0x4E00 <= o <= 0x9FFF
+            or 0x20000 <= o <= 0x2EBEF
+            or 0x30000 <= o <= 0x323AF
+            or 0xFF00 <= o <= 0xFFEF
+        ):
             return True
     return False
 
@@ -74,6 +105,8 @@ def _load(paths: tuple, size: int) -> ImageFont.FreeTypeFont:
 
 
 def pick_font(text: str, size: int, bold: bool = False) -> ImageFont.FreeTypeFont:
+    if _has_hangul(text):
+        return _load(tuple(_HANGUL_BOLD if bold else _HANGUL_REGULAR), size)
     if _has_cjk(text):
         return _load(tuple(_CJK_BOLD if bold else _CJK_REGULAR), size)
     return _load(tuple(_LATIN_BOLD if bold else _LATIN_REGULAR), size)
@@ -113,17 +146,37 @@ def wrap_text(text: str, size: int, bold: bool, max_w: int, max_lines: int) -> l
         units = list(segment) if cjk else segment.split(" ")
         cur = ""
         for unit in units:
-            cand = unit if not cur else f"{cur}{joiner}{unit}"
-            if _text_w(cand, font) <= max_w:
-                cur = cand
-                continue
-            if cur:
-                lines.append(cur)
-                if len(lines) >= max_lines:
-                    cur = ""
-                    truncated = True
-                    break
-            cur = unit
+            # A URL, hash, identifier, or other unbroken Latin token may be
+            # wider than the whole text box. Split it deterministically so no
+            # glyphs can escape the card while preserving the exact text.
+            if not cjk and _text_w(unit, font) > max_w:
+                chunks = []
+                chunk = ""
+                for character in unit:
+                    candidate_chunk = chunk + character
+                    if chunk and _text_w(candidate_chunk, font) > max_w:
+                        chunks.append(chunk)
+                        chunk = character
+                    else:
+                        chunk = candidate_chunk
+                if chunk:
+                    chunks.append(chunk)
+            else:
+                chunks = [unit]
+            for chunk in chunks:
+                cand = chunk if not cur else f"{cur}{joiner}{chunk}"
+                if _text_w(cand, font) <= max_w:
+                    cur = cand
+                    continue
+                if cur:
+                    lines.append(cur)
+                    if len(lines) >= max_lines:
+                        cur = ""
+                        truncated = True
+                        break
+                cur = chunk
+            if truncated:
+                break
         if cur:
             if len(lines) < max_lines:
                 lines.append(cur)
@@ -161,8 +214,8 @@ class Palette:
 def light_palette(accent: RGB = (37, 99, 235)) -> Palette:
     return Palette(
         bg=(233, 236, 241), card=(255, 255, 255), panel=(244, 246, 249),
-        line=(224, 228, 235), text=(17, 24, 33), muted=(120, 132, 149),
-        accent=accent, good=(22, 163, 74), warn=(217, 119, 6), bad=(220, 38, 38),
+        line=(224, 228, 235), text=(17, 24, 33), muted=(94, 109, 130),
+        accent=accent, good=(15, 118, 55), warn=(185, 90, 0), bad=(220, 38, 38),
         on_accent=(255, 255, 255),
     )
 
@@ -376,14 +429,14 @@ class Row(Node):
 # Semantic builders
 # --------------------------------------------------------------------------- #
 def stat_box(pal: Palette, label: str, value: str, *, value_color: Optional[RGB] = None,
-             value_size: int = 46, sub: Optional[str] = None, big: bool = True) -> Column:
+             value_size: int = 64, sub: Optional[str] = None, big: bool = True) -> Column:
     kids = [
-        Text(label, 18, pal.muted, bold=True, tracking=1),
-        Gap(10 if big else 6),
+        Text(label, 30, pal.muted, bold=True, tracking=1),
+        Gap(14 if big else 10),
         Text(value, value_size, value_color or pal.text, bold=True, max_lines=1),
     ]
     if sub:
-        kids += [Gap(6), Text(sub, 17, pal.muted, max_lines=1)]
+        kids += [Gap(8), Text(sub, 30, pal.muted, max_lines=2)]
     return Column(kids, pad=(20, 22, 22, 22) if big else (16, 16, 16, 16),
                   bg=pal.panel, radius=16, border=pal.line)
 
@@ -392,12 +445,12 @@ def bar_row(pal: Palette, label: str, ratio: float, value: str,
             fill: Optional[RGB] = None) -> Row:
     return Row(
         [
-            Text(label, 21, pal.muted, bold=True),
-            Bar(ratio, pal.line, fill or pal.good, height=16),
-            Text(value, 21, pal.text, bold=True, align="right"),
+            Text(label, 32, pal.muted, bold=True),
+            Bar(ratio, pal.line, fill or pal.good, height=24),
+            Text(value, 32, pal.text, bold=True, align="right"),
         ],
-        gap=18,
-        widths=[92, None, 118],
+        gap=22,
+        widths=[120, None, 170],
         valign="center",
     )
 

@@ -1,130 +1,285 @@
 ---
-name: tg-watch-anchor-price-card
-description: Create Telegram photo-card alerts for anchor-priced assets such as stablecoins, wrapped assets, LST/LRT tokens, and LP shares when the user needs a visual card showing current price, fair anchor, discount/premium, redemption delay, hedge availability, and profit ladder.
+name: tg-watch-visual-system
+description: Design, implement, and validate the best Telegram-facing visual output for any script or agent workflow. Use when Codex or another coding agent creates or revises user-visible Telegram output and must inspect the script's meaning, choose between native text/Rich Message, static image or map, media album, animation, and video, then implement mobile-first rendering for comparisons, trends, thresholds, value anchors, discounts or premiums, rankings, composition, timelines, locations, routes, distances, networks, uncertainty, or digests. This skill is purely visual and must not own alert triggers, scheduling, routing, deduplication, retries, acknowledgements, trading decisions, or source-data logic.
 ---
 
-# TG Watch Anchor Price Card
+# TG Watch Visual System
 
-Use this skill when a Telegram monitoring bot needs a **photo + caption** alert for an asset whose risk is measured against an anchor price, not just a raw price move.
+Treat the skill as a **visual compiler**, not a card template and not an alert
+framework.
 
-Good fits:
-- stablecoin peg deviation
-- wrapped asset discount or premium
-- LST/LRT secondary-market discount
-- LP share fair-value gap
-- redeemable asset vs market price spread
-
-Do not use it for generic uptime, cron heartbeat, news digest, or non-price system alerts.
-
-## Output Contract
-
-Every alert should produce:
-
-1. A rendered image card used as the Telegram `sendPhoto` payload.
-2. A short caption used as the Telegram `caption`.
-3. A clear non-trading disclaimer when the card is only a monitor signal.
-
-The card must answer, at a glance:
-
-- what asset pair is being compared
-- current price
-- fair anchor price
-- discount or premium
-- estimated net profit per notional size
-- redemption delay
-- hedge availability
-- liquidity/source venue
-- profit ladder by notional
-
-## Visual Pattern
-
-Use a dark evidence card with an accent severity rail.
-
-Primary fields:
-- `pair`: e.g. `rswETH / ETH`
-- `severity`: `P0`, `P1`, `P2`, or `FYI`
-- `discount_percent` or `premium_percent`
-- `current_price`
-- `fair_anchor_price`
-- `fair_anchor_method`: e.g. `7D p95`, `oracle`, `NAV`, `TWAP`
-- `net_per_100k`
-- `redeem_delay`
-- `hedge`: `YES`, `PARTIAL`, or `NO`
-- `venue`: e.g. `Curve/Uniswap V3`
-
-Profit ladder:
-- show at least 3 notional points, typically `10k`, `50k`, `100k`
-- show estimated net value after fees/slippage/hedge cost
-- never imply execution certainty
-
-## Caption Pattern
-
-Keep captions compact and mobile-readable.
+Compile:
 
 ```text
-[SECURITY-P1] rswETH / ETH anchor alert
-ANCHOR - discount 1.56% - net $800/100K
-
-Pair: rswETH / ETH - Curve/Uniswap V3
-Anchor: current $3,210 vs fair 7D p95 $3,261
-Window: redeem 10d - hedge available
-Action: Watch only; escalate if discount widens or liquidity thins
+script + sample output + user question
+→ semantic roles
+→ visual intent
+→ text / image / video
+→ visual grammar
+→ renderer
+→ Telegram-compatible artifact
+→ mobile visual QA
 ```
 
-## Data Discipline
+## Core contract
 
-- Use live market, oracle, protocol, or pool data for prices.
-- Label the fair-anchor method.
-- If the card is for DeFi or real-money monitoring, state whether it is a monitor signal or an execution signal.
-- Do not generate financial numbers from memory.
-- If a required data source is unavailable, send a text fallback explaining what is missing instead of fabricating the image.
+Keep all work inside the presentation layer.
 
-## Script
+Do:
 
-Use `scripts/render_anchor_price_card.py` to render a PNG card.
+- inspect the real script, output schema, sample payload, and current rendering;
+- identify the one question the user must answer first;
+- preserve supplied numbers, units, thresholds, anchors, time, source, and
+  uncertainty;
+- select the least expensive medium that expresses the relationships correctly;
+- implement the selected visual in the script or a reusable renderer;
+- generate a real preview from representative data;
+- validate the preview at Telegram mobile sizes;
+- provide a lossless fallback for unsupported Telegram features.
 
-Example:
+Do not:
 
-```bash
-python3 scripts/render_anchor_price_card.py \
-  --out /tmp/anchor-card.png \
-  --pair "rswETH / ETH" \
-  --discount 1.56 \
-  --current 3210 \
-  --fair 3261 \
-  --net-100k 800 \
-  --redeem "10d" \
-  --hedge "YES" \
-  --venue "Curve/Uniswap V3" \
-  --method "7D p95"
+- create or change trigger conditions, schedules, routing, topics, cooldowns,
+  deduplication, retries, acknowledgements, or delivery policy;
+- invent severity, anchor values, thresholds, recommendations, confidence, or
+  business conclusions;
+- change data acquisition, financial calculations, trading behavior, or
+  execution permissions;
+- turn a short answer into an image or video merely for decoration;
+- claim completion without opening or otherwise inspecting the rendered output.
+
+If the user requests a plan only, stop after producing a `VisualSpec`. Otherwise,
+implement, render, and verify.
+
+## Required workflow
+
+### 1. Inspect the real output
+
+Read the relevant script and any formatter, template, renderer, sample payload,
+and existing screenshots. Run a safe local sample when possible.
+
+Record:
+
+- audience and Telegram reading context;
+- primary question;
+- available facts and their provenance;
+- relationships among facts;
+- expected reading time: `5s`, `15s`, or `exploratory`;
+- platform and dependency constraints.
+
+Never design from filenames alone.
+
+### 2. Extract semantic roles
+
+Map source fields to domain-independent roles such as:
+
+`scalar`, `delta`, `anchor`, `threshold`, `interval`, `series`, `category`,
+`geo_point`, `geo_path`, `geo_region`, `network`, `sequence`, `uncertainty`,
+`time`, `unit`, and `source`.
+
+Then identify one or more visual intents:
+
+`state`, `state_change`, `comparison`, `ranking`, `trend`, `composition`,
+`threshold_distance`, `value_anchor`, `discount_premium`, `spread`, `timeline`,
+`geo_location`, `distance_route`, `network`, `before_after`, `uncertainty`, or
+`digest`.
+
+Read `references/semantic-roles.md` whenever roles or intents are ambiguous.
+
+### 3. Select the medium
+
+Choose among three visual media:
+
+1. **Text**
+   - Use basic formatted text for one conclusion and at most five supporting
+     facts.
+   - Use Telegram Rich Message for structured reports, tables, details, quotes,
+     formulas, or native media blocks when the runtime supports it.
+2. **Image**
+   - Use a card, chart, static map, timeline, topology, or 2–10 item album when
+     the user must perceive comparison, scale, shape, spatial relation, or
+     simultaneous evidence.
+3. **Video**
+   - Use animation/video only when movement, order, propagation, or transition
+     carries meaning that a static view cannot express as clearly.
+
+Require video to beat the best static alternative by at least 15 points in the
+medium score. Otherwise use the static alternative.
+
+Read `references/decision-engine.md` before making a non-obvious medium choice.
+Record rejected media and reasons in the `VisualSpec`.
+
+### 4. Compile a VisualSpec
+
+Create the semantic and medium-decision contract before rendering:
+
+```json
+{
+  "schema_version": "1.0",
+  "primary_question": "How close is utilization to its threshold?",
+  "headline": "Capacity",
+  "answer": "73% used",
+  "semantic_roles": ["scalar", "threshold", "delta", "time", "unit", "source"],
+  "intents": ["threshold_distance"],
+  "evidence": [
+    {
+      "label": "Current",
+      "value": "73",
+      "unit": "%",
+      "role": "scalar",
+      "source_path": "$.utilization"
+    }
+  ],
+  "scores": {"text": 55, "image": 95, "video": 20},
+  "selected_modality": "image",
+  "fallback_chain": ["image", "text"],
+  "selection_reason": "A shared scale exposes the remaining buffer.",
+  "grammar": "threshold-bullet",
+  "feature_gate": {
+    "rich_messages": false,
+    "images": true,
+    "videos": true
+  },
+  "warnings": []
+}
 ```
 
-Then send `/tmp/anchor-card.png` with the caption generated from the same inputs.
+Use `scripts/inspect_visual_semantics.py` to generate or validate a draft
+specification when the input can be represented as JSON. Keep Rich Messages
+disabled until the deployed Bot API path, library, and target clients are
+verified.
 
-Rendering notes:
+For text, compile `VisualSpec` directly through
+`scripts/render_rich_message.py`. For image or video, explicitly compile it
+into a concrete `RenderSpec`; bind every displayed field back to an
+`evidence.source_path`:
 
-- Light theme by default (matches the FAB card visual language). Pass `--theme dark` for the original dark card.
-- `--width` sets canvas width (default 1200); height is computed automatically from the content.
-- Chinese / CJK text renders correctly — the layout layer auto-selects a CJK font (Hiragino / STHeiti / Noto) for any string that contains CJK, and Helvetica / Arial for Latin-only strings.
+```json
+{
+  "visual_spec": {
+    "selected_modality": "image",
+    "grammar": "threshold-bullet",
+    "evidence": [
+      {"value": "Capacity", "source_path": "$.label"},
+      {"value": "73", "source_path": "$.utilization"},
+      {"value": "85", "source_path": "$.threshold"},
+      {"value": "%", "source_path": "$.unit"},
+      {"value": "metrics API", "source_path": "$.source"},
+      {"value": "2026-07-23 09:30 SGT", "source_path": "$.timestamp"}
+    ]
+  },
+  "render_spec": {
+    "version": "1.0",
+    "kind": "threshold",
+    "title": "Capacity",
+    "data": {"value": 73, "threshold": 85, "unit": "%"},
+    "meta": {"source": "metrics API", "timestamp": "2026-07-23 09:30 SGT"},
+    "source_bindings": {
+      "title": {
+        "inputs": ["$.label"],
+        "operation": "copy",
+        "verified_result": "Capacity"
+      },
+      "data.value": {"source_path": "$.utilization"},
+      "data.threshold": {"source_path": "$.threshold"},
+      "data.unit": {"source_path": "$.unit"},
+      "meta.source": {"source_path": "$.source"},
+      "meta.timestamp": {"source_path": "$.timestamp"}
+    }
+  }
+}
+```
 
-## Rendering engine
+The shortened `visual_spec` above illustrates the binding only; pass the full
+validated object in a real bundle. Do not let a pixel renderer guess which
+source field belongs to a mark. Treat a standalone `RenderSpec` as an
+exploratory preview; release validation requires the source-bound bundle.
 
-The card is drawn with `scripts/layout.py`, a thin declarative layout layer over
-Pillow. There is **no browser, Node, or system-library dependency** — only Pillow.
+### 5. Apply the visual grammar
 
-Cards are described as a tree of nodes (`Column`, `Row`, `Text`, `Bar`,
-`stat_box`, `bar_row`) with padding, gap, and rounded panels; positions are
-computed rather than hand-written as pixel coordinates. To add a new card type,
-compose these nodes and call `layout.render_card(...)`. The node reference lives
-in `references/rendering.md`.
+Use one dominant visual question and at most two supporting evidence modules.
 
-## Reference
+Apply this shared hierarchy to every medium:
 
-For the field schema and example card anatomy, read `references/anchor-price-card.md`.
+1. **Answer** — verdict and one hero metric.
+2. **Evidence** — comparison, trend, range, route, timeline, or other
+   relationship.
+3. **Trust** — object, time, unit, source, uncertainty, and missing/estimated
+   status.
 
-## Changelog
+Read only the medium-specific reference needed:
 
-- **v0.2.0** — Rewrote rendering onto the zero-dependency `layout.py` layout layer
-  (declarative nodes, no absolute pixel math). Added a light theme (now default),
-  a `--theme` / `--width` flag, and content-aware CJK font selection.
-- **v0.1.0** — Initial anchor-price card (dark, hand-placed Pillow coordinates).
+- text or Rich Message: `references/text-visuals.md`
+- cards and statistical charts: `references/image-visuals.md`
+- locations, routes, radius, or regions: `references/map-visuals.md`
+- animation or video: `references/motion-visuals.md`
+- anchor, discount, or premium: `references/anchor-price-card.md`
+- low-level Pillow composition: `references/rendering.md`
+
+### 6. Render with the smallest suitable engine
+
+Prefer deterministic local renderers:
+
+- native structured output from `VisualSpec`: `scripts/render_rich_message.py`
+- source-bound image/video bundle dispatch: `scripts/render_visual.py`
+- cards and charts: `scripts/layout.py` and `scripts/render_chart.py`
+- maps: `scripts/render_map.py`
+- animations: `scripts/render_motion.py`
+- explicit-fixture legacy anchor recipe: `scripts/render_anchor_price_card.py`
+
+Use `assets/examples/visual-system-gallery.png` as a renderer index, not as a
+template to copy blindly. The route and motion poster/final examples in the
+same folder are release-reviewed mobile references.
+
+Do not require a hosted chart service for sourced or sensitive data. Keep every
+renderer usable without Telegram credentials.
+
+For Telegram 10.2 Rich Messages and framework feature gates, read
+`references/telegram-10.2.md`. Always provide an older-client/framework fallback.
+
+### 7. Generate and inspect previews
+
+Render at least one representative artifact. For reusable or high-risk layouts,
+also render:
+
+- a long CJK title;
+- missing optional data;
+- an extreme value or long label;
+- light and dark themes when both are supported.
+
+Use `scripts/make_contact_sheet.py` for multi-variant inspection. Open the output
+at full size, then materialize and inspect the 320, 375, 390, and 430 px mobile
+previews. Do not approve from dimensions or file existence alone.
+
+### 8. Run visual QA
+
+Run `scripts/validate_visual.py` on every image or animation and apply
+`references/accessibility.md`.
+
+Reject the output if any of these are true:
+
+- the primary answer is not identifiable within five seconds;
+- text is clipped, overlaps, becomes tofu, or is unreadable at any required
+  mobile width;
+- color or emoji is the only state encoding;
+- axes, units, anchors, thresholds, time, or sources are missing when relevant;
+- the caption repeats the image rather than complements it;
+- a map does not answer location, distance, direction, route, or affected area;
+- a video depends on sound, begins blank, or lacks a readable conclusion frame;
+- displayed values cannot be traced to the input.
+
+Read `references/acceptance-gates.md` before declaring a reusable renderer or
+skill revision complete.
+
+## Output requirements
+
+For an implementation task, return:
+
+- the selected medium and one-sentence rationale;
+- the implemented file paths;
+- the rendered preview paths;
+- fallback behavior;
+- validation commands and results;
+- any visual limitation that remains.
+
+Do not describe alert-system behavior that this skill did not own.
