@@ -1,0 +1,2632 @@
+{
+  "version": 1,
+  "description": "17 visual intents × 5 robustness variants",
+  "case_count": 85,
+  "cases": [
+    {
+      "intent": "state",
+      "primary_question": "What is the current state?",
+      "roles": [
+        "category",
+        "status",
+        "time"
+      ],
+      "expected_medium": "text",
+      "expected_grammar": "verdict-key-values",
+      "sample": {
+        "label": "API availability",
+        "value": "healthy",
+        "time": "09:30",
+        "source": "probe"
+      },
+      "id": "state-basic",
+      "variant": "basic",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "state",
+      "primary_question": "What is the current state?",
+      "roles": [
+        "category",
+        "status",
+        "time"
+      ],
+      "expected_medium": "text",
+      "expected_grammar": "verdict-key-values",
+      "sample": {
+        "label": "API availability——这是一个用于验证中文长标题自动换行、数字宽度和移动端可读性的案例",
+        "value": "healthy",
+        "time": "09:30",
+        "source": "probe"
+      },
+      "id": "state-cjk_long",
+      "variant": "cjk_long",
+      "locale": "zh-CN",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "state",
+      "primary_question": "What is the current state?",
+      "roles": [
+        "category",
+        "status",
+        "time"
+      ],
+      "expected_medium": "text",
+      "expected_grammar": "verdict-key-values",
+      "sample": {
+        "label": "API availability",
+        "value": "healthy",
+        "time": "09:30"
+      },
+      "id": "state-missing_optional",
+      "variant": "missing_optional",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "state",
+      "primary_question": "What is the current state?",
+      "roles": [
+        "category",
+        "status",
+        "time"
+      ],
+      "expected_medium": "text",
+      "expected_grammar": "verdict-key-values",
+      "sample": {
+        "label": "API availability",
+        "value": "unknown / degraded / recovering / awaiting confirmation",
+        "time": "09:30",
+        "source": "probe"
+      },
+      "id": "state-extreme",
+      "variant": "extreme",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "state",
+      "primary_question": "What is the current state?",
+      "roles": [
+        "category",
+        "status",
+        "time"
+      ],
+      "expected_medium": "text",
+      "expected_grammar": "verdict-key-values",
+      "sample": {
+        "label": "API availability",
+        "value": "healthy",
+        "time": "09:30",
+        "source": "probe",
+        "confidence": "medium"
+      },
+      "id": "state-composite",
+      "variant": "composite",
+      "locale": "en",
+      "uncertainty": "interval",
+      "secondary_intents": [
+        "uncertainty"
+      ]
+    },
+    {
+      "intent": "digest",
+      "primary_question": "What are the few facts that matter?",
+      "roles": [
+        "category"
+      ],
+      "expected_medium": "text",
+      "expected_grammar": "html-digest",
+      "sample": {
+        "title": "Daily brief",
+        "items": [
+          "Fact A",
+          "Fact B",
+          "Fact C"
+        ],
+        "source": "three feeds"
+      },
+      "id": "digest-basic",
+      "variant": "basic",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "digest",
+      "primary_question": "What are the few facts that matter?",
+      "roles": [
+        "category"
+      ],
+      "expected_medium": "text",
+      "expected_grammar": "html-digest",
+      "sample": {
+        "title": "Daily brief",
+        "items": [
+          "Fact A",
+          "Fact B",
+          "Fact C"
+        ],
+        "source": "three feeds",
+        "label": "digest——这是一个用于验证中文长标题自动换行、数字宽度和移动端可读性的案例"
+      },
+      "id": "digest-cjk_long",
+      "variant": "cjk_long",
+      "locale": "zh-CN",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "digest",
+      "primary_question": "What are the few facts that matter?",
+      "roles": [
+        "category"
+      ],
+      "expected_medium": "text",
+      "expected_grammar": "html-digest",
+      "sample": {
+        "title": "Daily brief",
+        "items": [
+          "Fact A",
+          "Fact B",
+          "Fact C"
+        ]
+      },
+      "id": "digest-missing_optional",
+      "variant": "missing_optional",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "digest",
+      "primary_question": "What are the few facts that matter?",
+      "roles": [
+        "category"
+      ],
+      "expected_medium": "text",
+      "expected_grammar": "html-digest",
+      "sample": {
+        "title": "Daily brief",
+        "items": [
+          "Fact 1: representative long evidence item 999,999",
+          "Fact 2: representative long evidence item 1,999,998",
+          "Fact 3: representative long evidence item 2,999,997",
+          "Fact 4: representative long evidence item 3,999,996",
+          "Fact 5: representative long evidence item 4,999,995",
+          "Fact 6: representative long evidence item 5,999,994",
+          "Fact 7: representative long evidence item 6,999,993",
+          "Fact 8: representative long evidence item 7,999,992",
+          "Fact 9: representative long evidence item 8,999,991",
+          "Fact 10: representative long evidence item 9,999,990",
+          "Fact 11: representative long evidence item 10,999,989",
+          "Fact 12: representative long evidence item 11,999,988"
+        ],
+        "source": "three feeds"
+      },
+      "id": "digest-extreme",
+      "variant": "extreme",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "digest",
+      "primary_question": "What are the few facts that matter?",
+      "roles": [
+        "category"
+      ],
+      "expected_medium": "text",
+      "expected_grammar": "html-digest",
+      "sample": {
+        "title": "Daily brief",
+        "items": [
+          "Fact A",
+          "Fact B",
+          "Fact C"
+        ],
+        "source": "three feeds",
+        "confidence": "medium"
+      },
+      "id": "digest-composite",
+      "variant": "composite",
+      "locale": "en",
+      "uncertainty": "interval",
+      "secondary_intents": [
+        "uncertainty"
+      ]
+    },
+    {
+      "intent": "threshold_distance",
+      "primary_question": "How far is the current value from the threshold?",
+      "roles": [
+        "category",
+        "scalar",
+        "threshold",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "threshold-bullet",
+      "sample": {
+        "label": "Utilization",
+        "value": 73,
+        "threshold": 85,
+        "unit": "%",
+        "source": "metrics API"
+      },
+      "id": "threshold_distance-basic",
+      "variant": "basic",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "threshold_distance",
+      "primary_question": "How far is the current value from the threshold?",
+      "roles": [
+        "category",
+        "scalar",
+        "threshold",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "threshold-bullet",
+      "sample": {
+        "label": "Utilization——这是一个用于验证中文长标题自动换行、数字宽度和移动端可读性的案例",
+        "value": 73,
+        "threshold": 85,
+        "unit": "%",
+        "source": "metrics API"
+      },
+      "id": "threshold_distance-cjk_long",
+      "variant": "cjk_long",
+      "locale": "zh-CN",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "threshold_distance",
+      "primary_question": "How far is the current value from the threshold?",
+      "roles": [
+        "category",
+        "scalar",
+        "threshold",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "threshold-bullet",
+      "sample": {
+        "label": "Utilization",
+        "value": 73,
+        "threshold": 85,
+        "unit": "%"
+      },
+      "id": "threshold_distance-missing_optional",
+      "variant": "missing_optional",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "threshold_distance",
+      "primary_question": "How far is the current value from the threshold?",
+      "roles": [
+        "category",
+        "scalar",
+        "threshold",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "threshold-bullet",
+      "sample": {
+        "label": "Utilization",
+        "value": 9999999999.999,
+        "threshold": 1e-06,
+        "unit": "%",
+        "source": "metrics API"
+      },
+      "id": "threshold_distance-extreme",
+      "variant": "extreme",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "threshold_distance",
+      "primary_question": "How far is the current value from the threshold?",
+      "roles": [
+        "category",
+        "scalar",
+        "threshold",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "threshold-bullet",
+      "sample": {
+        "label": "Utilization",
+        "value": 73,
+        "threshold": 85,
+        "unit": "%",
+        "source": "metrics API",
+        "confidence_interval": [
+          69.35,
+          76.65
+        ]
+      },
+      "id": "threshold_distance-composite",
+      "variant": "composite",
+      "locale": "en",
+      "uncertainty": "interval",
+      "secondary_intents": [
+        "uncertainty"
+      ]
+    },
+    {
+      "intent": "value_anchor",
+      "primary_question": "Where is the current value relative to its defensible anchor?",
+      "roles": [
+        "anchor",
+        "category",
+        "interval",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "value-band",
+      "sample": {
+        "label": "Asset / anchor",
+        "value": 96.4,
+        "anchor": 100,
+        "interval": [
+          98,
+          102
+        ],
+        "unit": "USD",
+        "source": "anchor fixture"
+      },
+      "id": "value_anchor-basic",
+      "variant": "basic",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "value_anchor",
+      "primary_question": "Where is the current value relative to its defensible anchor?",
+      "roles": [
+        "anchor",
+        "category",
+        "interval",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "value-band",
+      "sample": {
+        "label": "Asset / anchor——这是一个用于验证中文长标题自动换行、数字宽度和移动端可读性的案例",
+        "value": 96.4,
+        "anchor": 100,
+        "interval": [
+          98,
+          102
+        ],
+        "unit": "USD",
+        "source": "anchor fixture"
+      },
+      "id": "value_anchor-cjk_long",
+      "variant": "cjk_long",
+      "locale": "zh-CN",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "value_anchor",
+      "primary_question": "Where is the current value relative to its defensible anchor?",
+      "roles": [
+        "anchor",
+        "category",
+        "interval",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "value-band",
+      "sample": {
+        "label": "Asset / anchor",
+        "value": 96.4,
+        "anchor": 100,
+        "interval": [
+          98,
+          102
+        ],
+        "unit": "USD"
+      },
+      "id": "value_anchor-missing_optional",
+      "variant": "missing_optional",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "value_anchor",
+      "primary_question": "Where is the current value relative to its defensible anchor?",
+      "roles": [
+        "anchor",
+        "category",
+        "interval",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "value-band",
+      "sample": {
+        "label": "Asset / anchor",
+        "value": -12345.67,
+        "anchor": 1e-06,
+        "interval": [
+          -999999.5,
+          9999999999.999
+        ],
+        "unit": "USD",
+        "source": "anchor fixture"
+      },
+      "id": "value_anchor-extreme",
+      "variant": "extreme",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "value_anchor",
+      "primary_question": "Where is the current value relative to its defensible anchor?",
+      "roles": [
+        "anchor",
+        "category",
+        "interval",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "value-band",
+      "sample": {
+        "label": "Asset / anchor",
+        "value": 96.4,
+        "anchor": 100,
+        "interval": [
+          98,
+          102
+        ],
+        "unit": "USD",
+        "source": "anchor fixture",
+        "confidence_interval": [
+          91.58000000000001,
+          101.22
+        ]
+      },
+      "id": "value_anchor-composite",
+      "variant": "composite",
+      "locale": "en",
+      "uncertainty": "interval",
+      "secondary_intents": [
+        "uncertainty"
+      ]
+    },
+    {
+      "intent": "discount_premium",
+      "primary_question": "What is the discount or premium to the stated anchor?",
+      "roles": [
+        "anchor",
+        "category",
+        "delta",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "value-band",
+      "sample": {
+        "label": "Asset discount",
+        "current_price": 96.4,
+        "fair_anchor_price": 100,
+        "discount_percent": 3.6,
+        "unit": "USD",
+        "source": "example feed"
+      },
+      "id": "discount_premium-basic",
+      "variant": "basic",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "discount_premium",
+      "primary_question": "What is the discount or premium to the stated anchor?",
+      "roles": [
+        "anchor",
+        "category",
+        "delta",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "value-band",
+      "sample": {
+        "label": "Asset discount——这是一个用于验证中文长标题自动换行、数字宽度和移动端可读性的案例",
+        "current_price": 96.4,
+        "fair_anchor_price": 100,
+        "discount_percent": 3.6,
+        "unit": "USD",
+        "source": "example feed"
+      },
+      "id": "discount_premium-cjk_long",
+      "variant": "cjk_long",
+      "locale": "zh-CN",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "discount_premium",
+      "primary_question": "What is the discount or premium to the stated anchor?",
+      "roles": [
+        "anchor",
+        "category",
+        "delta",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "value-band",
+      "sample": {
+        "label": "Asset discount",
+        "current_price": 96.4,
+        "fair_anchor_price": 100,
+        "discount_percent": 3.6,
+        "unit": "USD"
+      },
+      "id": "discount_premium-missing_optional",
+      "variant": "missing_optional",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "discount_premium",
+      "primary_question": "What is the discount or premium to the stated anchor?",
+      "roles": [
+        "anchor",
+        "category",
+        "delta",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "value-band",
+      "sample": {
+        "label": "Asset discount",
+        "current_price": -12345.67,
+        "fair_anchor_price": 1e-06,
+        "discount_percent": 9999999999.999,
+        "unit": "USD",
+        "source": "example feed"
+      },
+      "id": "discount_premium-extreme",
+      "variant": "extreme",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "discount_premium",
+      "primary_question": "What is the discount or premium to the stated anchor?",
+      "roles": [
+        "anchor",
+        "category",
+        "delta",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "value-band",
+      "sample": {
+        "label": "Asset discount",
+        "current_price": 96.4,
+        "fair_anchor_price": 100,
+        "discount_percent": 3.6,
+        "unit": "USD",
+        "source": "example feed",
+        "confidence_interval": [
+          91.58000000000001,
+          101.22
+        ]
+      },
+      "id": "discount_premium-composite",
+      "variant": "composite",
+      "locale": "en",
+      "uncertainty": "interval",
+      "secondary_intents": [
+        "uncertainty"
+      ]
+    },
+    {
+      "intent": "spread",
+      "primary_question": "How large is the spread between the two supplied values?",
+      "roles": [
+        "category",
+        "delta",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "value-band",
+      "sample": {
+        "label": "Bid / ask spread",
+        "bid": 99.2,
+        "ask": 100.1,
+        "spread": 0.9,
+        "unit": "USD",
+        "source": "example venue"
+      },
+      "id": "spread-basic",
+      "variant": "basic",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "spread",
+      "primary_question": "How large is the spread between the two supplied values?",
+      "roles": [
+        "category",
+        "delta",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "value-band",
+      "sample": {
+        "label": "Bid / ask spread——这是一个用于验证中文长标题自动换行、数字宽度和移动端可读性的案例",
+        "bid": 99.2,
+        "ask": 100.1,
+        "spread": 0.9,
+        "unit": "USD",
+        "source": "example venue"
+      },
+      "id": "spread-cjk_long",
+      "variant": "cjk_long",
+      "locale": "zh-CN",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "spread",
+      "primary_question": "How large is the spread between the two supplied values?",
+      "roles": [
+        "category",
+        "delta",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "value-band",
+      "sample": {
+        "label": "Bid / ask spread",
+        "bid": 99.2,
+        "ask": 100.1,
+        "spread": 0.9,
+        "unit": "USD"
+      },
+      "id": "spread-missing_optional",
+      "variant": "missing_optional",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "spread",
+      "primary_question": "How large is the spread between the two supplied values?",
+      "roles": [
+        "category",
+        "delta",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "value-band",
+      "sample": {
+        "label": "Bid / ask spread",
+        "bid": -12345.67,
+        "ask": 9999999999.999,
+        "spread": 10000012345.669,
+        "unit": "USD",
+        "source": "example venue"
+      },
+      "id": "spread-extreme",
+      "variant": "extreme",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "spread",
+      "primary_question": "How large is the spread between the two supplied values?",
+      "roles": [
+        "category",
+        "delta",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "value-band",
+      "sample": {
+        "label": "Bid / ask spread",
+        "bid": 99.2,
+        "ask": 100.1,
+        "spread": 0.9,
+        "unit": "USD",
+        "source": "example venue",
+        "confidence_interval": [
+          94.24000000000001,
+          104.16
+        ]
+      },
+      "id": "spread-composite",
+      "variant": "composite",
+      "locale": "en",
+      "uncertainty": "interval",
+      "secondary_intents": [
+        "uncertainty"
+      ]
+    },
+    {
+      "intent": "comparison",
+      "primary_question": "Which option is larger and by how much?",
+      "roles": [
+        "category",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "aligned-bars",
+      "sample": {
+        "label": "Latency",
+        "categories": [
+          "A",
+          "B",
+          "C"
+        ],
+        "values": [
+          120,
+          84,
+          166
+        ],
+        "unit": "ms",
+        "source": "comparison fixture"
+      },
+      "id": "comparison-basic",
+      "variant": "basic",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "comparison",
+      "primary_question": "Which option is larger and by how much?",
+      "roles": [
+        "category",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "aligned-bars",
+      "sample": {
+        "label": "Latency——这是一个用于验证中文长标题自动换行、数字宽度和移动端可读性的案例",
+        "categories": [
+          "A",
+          "B",
+          "C"
+        ],
+        "values": [
+          120,
+          84,
+          166
+        ],
+        "unit": "ms",
+        "source": "comparison fixture"
+      },
+      "id": "comparison-cjk_long",
+      "variant": "cjk_long",
+      "locale": "zh-CN",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "comparison",
+      "primary_question": "Which option is larger and by how much?",
+      "roles": [
+        "category",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "aligned-bars",
+      "sample": {
+        "label": "Latency",
+        "categories": [
+          "A",
+          "B",
+          "C"
+        ],
+        "values": [
+          120,
+          84,
+          166
+        ],
+        "unit": "ms"
+      },
+      "id": "comparison-missing_optional",
+      "variant": "missing_optional",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "comparison",
+      "primary_question": "Which option is larger and by how much?",
+      "roles": [
+        "category",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "aligned-bars",
+      "sample": {
+        "label": "Latency",
+        "categories": [
+          "Very large",
+          "Very small",
+          "Negative"
+        ],
+        "values": [
+          9999999999.999,
+          1e-06,
+          -12345.67
+        ],
+        "unit": "ms",
+        "source": "comparison fixture"
+      },
+      "id": "comparison-extreme",
+      "variant": "extreme",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "comparison",
+      "primary_question": "Which option is larger and by how much?",
+      "roles": [
+        "category",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "aligned-bars",
+      "sample": {
+        "label": "Latency",
+        "categories": [
+          "A",
+          "B",
+          "C"
+        ],
+        "values": [
+          120,
+          84,
+          166
+        ],
+        "unit": "ms",
+        "source": "comparison fixture",
+        "confidence": "medium"
+      },
+      "id": "comparison-composite",
+      "variant": "composite",
+      "locale": "en",
+      "uncertainty": "interval",
+      "secondary_intents": [
+        "uncertainty"
+      ]
+    },
+    {
+      "intent": "ranking",
+      "primary_question": "What are the top items?",
+      "roles": [
+        "category",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "ranked-bars",
+      "sample": {
+        "label": "Top movers",
+        "categories": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ],
+        "values": [
+          9,
+          7,
+          5,
+          3,
+          1
+        ],
+        "unit": "%",
+        "source": "ranking fixture"
+      },
+      "id": "ranking-basic",
+      "variant": "basic",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "ranking",
+      "primary_question": "What are the top items?",
+      "roles": [
+        "category",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "ranked-bars",
+      "sample": {
+        "label": "Top movers——这是一个用于验证中文长标题自动换行、数字宽度和移动端可读性的案例",
+        "categories": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ],
+        "values": [
+          9,
+          7,
+          5,
+          3,
+          1
+        ],
+        "unit": "%",
+        "source": "ranking fixture"
+      },
+      "id": "ranking-cjk_long",
+      "variant": "cjk_long",
+      "locale": "zh-CN",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "ranking",
+      "primary_question": "What are the top items?",
+      "roles": [
+        "category",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "ranked-bars",
+      "sample": {
+        "label": "Top movers",
+        "categories": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ],
+        "values": [
+          9,
+          7,
+          5,
+          3,
+          1
+        ],
+        "unit": "%"
+      },
+      "id": "ranking-missing_optional",
+      "variant": "missing_optional",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "ranking",
+      "primary_question": "What are the top items?",
+      "roles": [
+        "category",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "ranked-bars",
+      "sample": {
+        "label": "Top movers",
+        "categories": [
+          "Very large",
+          "Very small",
+          "Negative"
+        ],
+        "values": [
+          9999999999.999,
+          1e-06,
+          -12345.67
+        ],
+        "unit": "%",
+        "source": "ranking fixture"
+      },
+      "id": "ranking-extreme",
+      "variant": "extreme",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "ranking",
+      "primary_question": "What are the top items?",
+      "roles": [
+        "category",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "ranked-bars",
+      "sample": {
+        "label": "Top movers",
+        "categories": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ],
+        "values": [
+          9,
+          7,
+          5,
+          3,
+          1
+        ],
+        "unit": "%",
+        "source": "ranking fixture",
+        "confidence": "medium"
+      },
+      "id": "ranking-composite",
+      "variant": "composite",
+      "locale": "en",
+      "uncertainty": "interval",
+      "secondary_intents": [
+        "uncertainty"
+      ]
+    },
+    {
+      "intent": "trend",
+      "primary_question": "How has the value changed over time?",
+      "roles": [
+        "category",
+        "scalar",
+        "series",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "annotated-line",
+      "sample": {
+        "label": "Requests",
+        "series": [
+          12,
+          18,
+          15,
+          29,
+          31,
+          27,
+          34
+        ],
+        "unit": "k",
+        "source": "timeseries fixture"
+      },
+      "id": "trend-basic",
+      "variant": "basic",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "trend",
+      "primary_question": "How has the value changed over time?",
+      "roles": [
+        "category",
+        "scalar",
+        "series",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "annotated-line",
+      "sample": {
+        "label": "Requests——这是一个用于验证中文长标题自动换行、数字宽度和移动端可读性的案例",
+        "series": [
+          12,
+          18,
+          15,
+          29,
+          31,
+          27,
+          34
+        ],
+        "unit": "k",
+        "source": "timeseries fixture"
+      },
+      "id": "trend-cjk_long",
+      "variant": "cjk_long",
+      "locale": "zh-CN",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "trend",
+      "primary_question": "How has the value changed over time?",
+      "roles": [
+        "category",
+        "scalar",
+        "series",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "annotated-line",
+      "sample": {
+        "label": "Requests",
+        "series": [
+          12,
+          18,
+          15,
+          29,
+          31,
+          27,
+          34
+        ],
+        "unit": "k"
+      },
+      "id": "trend-missing_optional",
+      "variant": "missing_optional",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "trend",
+      "primary_question": "How has the value changed over time?",
+      "roles": [
+        "category",
+        "scalar",
+        "series",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "annotated-line",
+      "sample": {
+        "label": "Requests",
+        "series": [
+          1e-06,
+          999999.0,
+          -12345.67,
+          9999999999.999
+        ],
+        "unit": "k",
+        "source": "timeseries fixture"
+      },
+      "id": "trend-extreme",
+      "variant": "extreme",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "trend",
+      "primary_question": "How has the value changed over time?",
+      "roles": [
+        "category",
+        "scalar",
+        "series",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "annotated-line",
+      "sample": {
+        "label": "Requests",
+        "series": [
+          12,
+          18,
+          15,
+          29,
+          31,
+          27,
+          34
+        ],
+        "unit": "k",
+        "source": "timeseries fixture",
+        "confidence": "medium"
+      },
+      "id": "trend-composite",
+      "variant": "composite",
+      "locale": "en",
+      "uncertainty": "interval",
+      "secondary_intents": [
+        "uncertainty"
+      ]
+    },
+    {
+      "intent": "composition",
+      "primary_question": "What makes up the total?",
+      "roles": [
+        "category",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "stacked-composition",
+      "sample": {
+        "label": "Portfolio mix",
+        "categories": [
+          "Core",
+          "Cash",
+          "Other"
+        ],
+        "values": [
+          62,
+          23,
+          15
+        ],
+        "unit": "%",
+        "source": "composition fixture"
+      },
+      "id": "composition-basic",
+      "variant": "basic",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "composition",
+      "primary_question": "What makes up the total?",
+      "roles": [
+        "category",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "stacked-composition",
+      "sample": {
+        "label": "Portfolio mix——这是一个用于验证中文长标题自动换行、数字宽度和移动端可读性的案例",
+        "categories": [
+          "Core",
+          "Cash",
+          "Other"
+        ],
+        "values": [
+          62,
+          23,
+          15
+        ],
+        "unit": "%",
+        "source": "composition fixture"
+      },
+      "id": "composition-cjk_long",
+      "variant": "cjk_long",
+      "locale": "zh-CN",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "composition",
+      "primary_question": "What makes up the total?",
+      "roles": [
+        "category",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "stacked-composition",
+      "sample": {
+        "label": "Portfolio mix",
+        "categories": [
+          "Core",
+          "Cash",
+          "Other"
+        ],
+        "values": [
+          62,
+          23,
+          15
+        ],
+        "unit": "%"
+      },
+      "id": "composition-missing_optional",
+      "variant": "missing_optional",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "composition",
+      "primary_question": "What makes up the total?",
+      "roles": [
+        "category",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "stacked-composition",
+      "sample": {
+        "label": "Portfolio mix",
+        "categories": [
+          "Core",
+          "Cash",
+          "Other"
+        ],
+        "values": [
+          1e-06,
+          9999999999.999,
+          1
+        ],
+        "unit": "%",
+        "source": "composition fixture"
+      },
+      "id": "composition-extreme",
+      "variant": "extreme",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "composition",
+      "primary_question": "What makes up the total?",
+      "roles": [
+        "category",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "stacked-composition",
+      "sample": {
+        "label": "Portfolio mix",
+        "categories": [
+          "Core",
+          "Cash",
+          "Other"
+        ],
+        "values": [
+          62,
+          23,
+          15
+        ],
+        "unit": "%",
+        "source": "composition fixture",
+        "confidence": "medium"
+      },
+      "id": "composition-composite",
+      "variant": "composite",
+      "locale": "en",
+      "uncertainty": "interval",
+      "secondary_intents": [
+        "uncertainty"
+      ]
+    },
+    {
+      "intent": "network",
+      "primary_question": "How are the supplied components connected?",
+      "roles": [
+        "category",
+        "network"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "node-link",
+      "sample": {
+        "label": "Pipeline topology",
+        "nodes": [
+          "Collector",
+          "Processor",
+          "Telegram",
+          "Archive"
+        ],
+        "edges": [
+          [
+            "Collector",
+            "Processor"
+          ],
+          [
+            "Processor",
+            "Telegram"
+          ],
+          [
+            "Processor",
+            "Archive"
+          ]
+        ],
+        "source": "runtime graph"
+      },
+      "id": "network-basic",
+      "variant": "basic",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "network",
+      "primary_question": "How are the supplied components connected?",
+      "roles": [
+        "category",
+        "network"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "node-link",
+      "sample": {
+        "label": "Pipeline topology——这是一个用于验证中文长标题自动换行、数字宽度和移动端可读性的案例",
+        "nodes": [
+          "Collector",
+          "Processor",
+          "Telegram",
+          "Archive"
+        ],
+        "edges": [
+          [
+            "Collector",
+            "Processor"
+          ],
+          [
+            "Processor",
+            "Telegram"
+          ],
+          [
+            "Processor",
+            "Archive"
+          ]
+        ],
+        "source": "runtime graph"
+      },
+      "id": "network-cjk_long",
+      "variant": "cjk_long",
+      "locale": "zh-CN",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "network",
+      "primary_question": "How are the supplied components connected?",
+      "roles": [
+        "category",
+        "network"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "node-link",
+      "sample": {
+        "label": "Pipeline topology",
+        "nodes": [
+          "Collector",
+          "Processor",
+          "Telegram",
+          "Archive"
+        ],
+        "edges": [
+          [
+            "Collector",
+            "Processor"
+          ],
+          [
+            "Processor",
+            "Telegram"
+          ],
+          [
+            "Processor",
+            "Archive"
+          ]
+        ]
+      },
+      "id": "network-missing_optional",
+      "variant": "missing_optional",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "network",
+      "primary_question": "How are the supplied components connected?",
+      "roles": [
+        "category",
+        "network"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "node-link",
+      "sample": {
+        "label": "Pipeline topology",
+        "nodes": [
+          "Node 0 with a long label",
+          "Node 1 with a long label",
+          "Node 2 with a long label",
+          "Node 3 with a long label",
+          "Node 4 with a long label",
+          "Node 5 with a long label",
+          "Node 6 with a long label",
+          "Node 7 with a long label",
+          "Node 8 with a long label",
+          "Node 9 with a long label",
+          "Node 10 with a long label",
+          "Node 11 with a long label"
+        ],
+        "edges": [
+          [
+            "Node 0 with a long label",
+            "Node 1 with a long label"
+          ],
+          [
+            "Node 0 with a long label",
+            "Node 2 with a long label"
+          ],
+          [
+            "Node 0 with a long label",
+            "Node 3 with a long label"
+          ],
+          [
+            "Node 1 with a long label",
+            "Node 2 with a long label"
+          ],
+          [
+            "Node 1 with a long label",
+            "Node 3 with a long label"
+          ],
+          [
+            "Node 1 with a long label",
+            "Node 4 with a long label"
+          ],
+          [
+            "Node 2 with a long label",
+            "Node 3 with a long label"
+          ],
+          [
+            "Node 2 with a long label",
+            "Node 4 with a long label"
+          ],
+          [
+            "Node 2 with a long label",
+            "Node 5 with a long label"
+          ],
+          [
+            "Node 3 with a long label",
+            "Node 4 with a long label"
+          ],
+          [
+            "Node 3 with a long label",
+            "Node 5 with a long label"
+          ],
+          [
+            "Node 3 with a long label",
+            "Node 6 with a long label"
+          ],
+          [
+            "Node 4 with a long label",
+            "Node 5 with a long label"
+          ],
+          [
+            "Node 4 with a long label",
+            "Node 6 with a long label"
+          ],
+          [
+            "Node 4 with a long label",
+            "Node 7 with a long label"
+          ],
+          [
+            "Node 5 with a long label",
+            "Node 6 with a long label"
+          ],
+          [
+            "Node 5 with a long label",
+            "Node 7 with a long label"
+          ],
+          [
+            "Node 5 with a long label",
+            "Node 8 with a long label"
+          ],
+          [
+            "Node 6 with a long label",
+            "Node 7 with a long label"
+          ],
+          [
+            "Node 6 with a long label",
+            "Node 8 with a long label"
+          ],
+          [
+            "Node 6 with a long label",
+            "Node 9 with a long label"
+          ],
+          [
+            "Node 7 with a long label",
+            "Node 8 with a long label"
+          ],
+          [
+            "Node 7 with a long label",
+            "Node 9 with a long label"
+          ],
+          [
+            "Node 7 with a long label",
+            "Node 10 with a long label"
+          ],
+          [
+            "Node 8 with a long label",
+            "Node 9 with a long label"
+          ],
+          [
+            "Node 8 with a long label",
+            "Node 10 with a long label"
+          ],
+          [
+            "Node 8 with a long label",
+            "Node 11 with a long label"
+          ],
+          [
+            "Node 9 with a long label",
+            "Node 10 with a long label"
+          ],
+          [
+            "Node 9 with a long label",
+            "Node 11 with a long label"
+          ],
+          [
+            "Node 10 with a long label",
+            "Node 11 with a long label"
+          ]
+        ],
+        "source": "runtime graph"
+      },
+      "id": "network-extreme",
+      "variant": "extreme",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "network",
+      "primary_question": "How are the supplied components connected?",
+      "roles": [
+        "category",
+        "network"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "node-link",
+      "sample": {
+        "label": "Pipeline topology",
+        "nodes": [
+          "Collector",
+          "Processor",
+          "Telegram",
+          "Archive"
+        ],
+        "edges": [
+          [
+            "Collector",
+            "Processor"
+          ],
+          [
+            "Processor",
+            "Telegram"
+          ],
+          [
+            "Processor",
+            "Archive"
+          ]
+        ],
+        "source": "runtime graph",
+        "confidence": "medium"
+      },
+      "id": "network-composite",
+      "variant": "composite",
+      "locale": "en",
+      "uncertainty": "interval",
+      "secondary_intents": [
+        "uncertainty"
+      ]
+    },
+    {
+      "intent": "before_after",
+      "primary_question": "What changed between the supplied before and after states?",
+      "roles": [
+        "category",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "aligned-bars",
+      "sample": {
+        "label": "Before / after",
+        "categories": [
+          "Latency",
+          "Errors",
+          "Throughput"
+        ],
+        "previous_values": [
+          120,
+          18,
+          80
+        ],
+        "current_values": [
+          84,
+          9,
+          116
+        ],
+        "unit": "index",
+        "source": "comparison fixture"
+      },
+      "id": "before_after-basic",
+      "variant": "basic",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "before_after",
+      "primary_question": "What changed between the supplied before and after states?",
+      "roles": [
+        "category",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "aligned-bars",
+      "sample": {
+        "label": "Before / after——这是一个用于验证中文长标题自动换行、数字宽度和移动端可读性的案例",
+        "categories": [
+          "Latency",
+          "Errors",
+          "Throughput"
+        ],
+        "previous_values": [
+          120,
+          18,
+          80
+        ],
+        "current_values": [
+          84,
+          9,
+          116
+        ],
+        "unit": "index",
+        "source": "comparison fixture"
+      },
+      "id": "before_after-cjk_long",
+      "variant": "cjk_long",
+      "locale": "zh-CN",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "before_after",
+      "primary_question": "What changed between the supplied before and after states?",
+      "roles": [
+        "category",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "aligned-bars",
+      "sample": {
+        "label": "Before / after",
+        "categories": [
+          "Latency",
+          "Errors",
+          "Throughput"
+        ],
+        "previous_values": [
+          120,
+          18,
+          80
+        ],
+        "current_values": [
+          84,
+          9,
+          116
+        ],
+        "unit": "index"
+      },
+      "id": "before_after-missing_optional",
+      "variant": "missing_optional",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "before_after",
+      "primary_question": "What changed between the supplied before and after states?",
+      "roles": [
+        "category",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "aligned-bars",
+      "sample": {
+        "label": "Before / after",
+        "categories": [
+          "Latency",
+          "Errors",
+          "Throughput"
+        ],
+        "previous_values": [
+          -12345.67,
+          1e-06,
+          9999999999.999
+        ],
+        "current_values": [
+          9999999999.999,
+          -12345.67,
+          1e-06
+        ],
+        "unit": "index",
+        "source": "comparison fixture"
+      },
+      "id": "before_after-extreme",
+      "variant": "extreme",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "before_after",
+      "primary_question": "What changed between the supplied before and after states?",
+      "roles": [
+        "category",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "aligned-bars",
+      "sample": {
+        "label": "Before / after",
+        "categories": [
+          "Latency",
+          "Errors",
+          "Throughput"
+        ],
+        "previous_values": [
+          120,
+          18,
+          80
+        ],
+        "current_values": [
+          84,
+          9,
+          116
+        ],
+        "unit": "index",
+        "source": "comparison fixture",
+        "confidence": "medium"
+      },
+      "id": "before_after-composite",
+      "variant": "composite",
+      "locale": "en",
+      "uncertainty": "interval",
+      "secondary_intents": [
+        "uncertainty"
+      ]
+    },
+    {
+      "intent": "uncertainty",
+      "primary_question": "What range of outcomes is supported by the supplied interval?",
+      "roles": [
+        "category",
+        "interval",
+        "scalar",
+        "uncertainty",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "range-band",
+      "sample": {
+        "label": "Latency estimate",
+        "estimate": 50,
+        "confidence_interval": [
+          44,
+          58
+        ],
+        "unit": "ms",
+        "source": "model output"
+      },
+      "id": "uncertainty-basic",
+      "variant": "basic",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "uncertainty",
+      "primary_question": "What range of outcomes is supported by the supplied interval?",
+      "roles": [
+        "category",
+        "interval",
+        "scalar",
+        "uncertainty",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "range-band",
+      "sample": {
+        "label": "Latency estimate——这是一个用于验证中文长标题自动换行、数字宽度和移动端可读性的案例",
+        "estimate": 50,
+        "confidence_interval": [
+          44,
+          58
+        ],
+        "unit": "ms",
+        "source": "model output"
+      },
+      "id": "uncertainty-cjk_long",
+      "variant": "cjk_long",
+      "locale": "zh-CN",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "uncertainty",
+      "primary_question": "What range of outcomes is supported by the supplied interval?",
+      "roles": [
+        "category",
+        "interval",
+        "scalar",
+        "uncertainty",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "range-band",
+      "sample": {
+        "label": "Latency estimate",
+        "estimate": 50,
+        "confidence_interval": [
+          44,
+          58
+        ],
+        "unit": "ms"
+      },
+      "id": "uncertainty-missing_optional",
+      "variant": "missing_optional",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "uncertainty",
+      "primary_question": "What range of outcomes is supported by the supplied interval?",
+      "roles": [
+        "category",
+        "interval",
+        "scalar",
+        "uncertainty",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "range-band",
+      "sample": {
+        "label": "Latency estimate",
+        "estimate": -12345.67,
+        "confidence_interval": [
+          -999999.5,
+          9999999999.999
+        ],
+        "unit": "ms",
+        "source": "model output"
+      },
+      "id": "uncertainty-extreme",
+      "variant": "extreme",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "uncertainty",
+      "primary_question": "What range of outcomes is supported by the supplied interval?",
+      "roles": [
+        "category",
+        "interval",
+        "scalar",
+        "uncertainty",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "range-band",
+      "sample": {
+        "label": "Latency estimate",
+        "estimate": 50,
+        "confidence_interval": [
+          47.5,
+          52.5
+        ],
+        "unit": "ms",
+        "source": "model output"
+      },
+      "id": "uncertainty-composite",
+      "variant": "composite",
+      "locale": "en",
+      "uncertainty": "interval",
+      "secondary_intents": [
+        "uncertainty"
+      ]
+    },
+    {
+      "intent": "geo_location",
+      "primary_question": "Where is the event?",
+      "roles": [
+        "category",
+        "geo_point",
+        "scalar"
+      ],
+      "expected_medium": "text",
+      "expected_grammar": "native-location",
+      "sample": {
+        "label": "Event point",
+        "latitude": 1.3521,
+        "longitude": 103.8198,
+        "source": "sensor"
+      },
+      "id": "geo_location-basic",
+      "variant": "basic",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "geo_location",
+      "primary_question": "Where is the event?",
+      "roles": [
+        "category",
+        "geo_point",
+        "scalar"
+      ],
+      "expected_medium": "text",
+      "expected_grammar": "native-location",
+      "sample": {
+        "label": "Event point——这是一个用于验证中文长标题自动换行、数字宽度和移动端可读性的案例",
+        "latitude": 1.3521,
+        "longitude": 103.8198,
+        "source": "sensor"
+      },
+      "id": "geo_location-cjk_long",
+      "variant": "cjk_long",
+      "locale": "zh-CN",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "geo_location",
+      "primary_question": "Where is the event?",
+      "roles": [
+        "category",
+        "geo_point",
+        "scalar"
+      ],
+      "expected_medium": "text",
+      "expected_grammar": "native-location",
+      "sample": {
+        "label": "Event point",
+        "latitude": 1.3521,
+        "longitude": 103.8198
+      },
+      "id": "geo_location-missing_optional",
+      "variant": "missing_optional",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "geo_location",
+      "primary_question": "Where is the event?",
+      "roles": [
+        "category",
+        "geo_point",
+        "scalar"
+      ],
+      "expected_medium": "text",
+      "expected_grammar": "native-location",
+      "sample": {
+        "label": "Event point",
+        "latitude": 89.9999,
+        "longitude": -179.9999,
+        "source": "sensor"
+      },
+      "id": "geo_location-extreme",
+      "variant": "extreme",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "geo_location",
+      "primary_question": "Where is the event?",
+      "roles": [
+        "category",
+        "geo_point",
+        "scalar"
+      ],
+      "expected_medium": "text",
+      "expected_grammar": "native-location",
+      "sample": {
+        "label": "Event point",
+        "latitude": 1.3521,
+        "longitude": 103.8198,
+        "source": "sensor",
+        "confidence_interval": [
+          1.2844950000000002,
+          1.419705
+        ]
+      },
+      "id": "geo_location-composite",
+      "variant": "composite",
+      "locale": "en",
+      "uncertainty": "interval",
+      "secondary_intents": [
+        "uncertainty"
+      ]
+    },
+    {
+      "intent": "distance_route",
+      "primary_question": "How are the origin, destination, and affected area related?",
+      "roles": [
+        "category",
+        "geo_path",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "route-map",
+      "sample": {
+        "label": "Route",
+        "origin": [
+          1.29,
+          103.85
+        ],
+        "destination": [
+          1.36,
+          103.99
+        ],
+        "distance": 18.4,
+        "unit": "km",
+        "source": "route fixture"
+      },
+      "id": "distance_route-basic",
+      "variant": "basic",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "distance_route",
+      "primary_question": "How are the origin, destination, and affected area related?",
+      "roles": [
+        "category",
+        "geo_path",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "route-map",
+      "sample": {
+        "label": "Route——这是一个用于验证中文长标题自动换行、数字宽度和移动端可读性的案例",
+        "origin": [
+          1.29,
+          103.85
+        ],
+        "destination": [
+          1.36,
+          103.99
+        ],
+        "distance": 18.4,
+        "unit": "km",
+        "source": "route fixture"
+      },
+      "id": "distance_route-cjk_long",
+      "variant": "cjk_long",
+      "locale": "zh-CN",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "distance_route",
+      "primary_question": "How are the origin, destination, and affected area related?",
+      "roles": [
+        "category",
+        "geo_path",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "route-map",
+      "sample": {
+        "label": "Route",
+        "origin": [
+          1.29,
+          103.85
+        ],
+        "destination": [
+          1.36,
+          103.99
+        ],
+        "distance": 18.4,
+        "unit": "km"
+      },
+      "id": "distance_route-missing_optional",
+      "variant": "missing_optional",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "distance_route",
+      "primary_question": "How are the origin, destination, and affected area related?",
+      "roles": [
+        "category",
+        "geo_path",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "route-map",
+      "sample": {
+        "label": "Route",
+        "origin": [
+          89.9,
+          179.9
+        ],
+        "destination": [
+          -89.9,
+          -179.9
+        ],
+        "distance": 20003.93,
+        "unit": "km",
+        "source": "route fixture"
+      },
+      "id": "distance_route-extreme",
+      "variant": "extreme",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "distance_route",
+      "primary_question": "How are the origin, destination, and affected area related?",
+      "roles": [
+        "category",
+        "geo_path",
+        "scalar",
+        "unit"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "route-map",
+      "sample": {
+        "label": "Route",
+        "origin": [
+          1.29,
+          103.85
+        ],
+        "destination": [
+          1.36,
+          103.99
+        ],
+        "distance": 18.4,
+        "unit": "km",
+        "source": "route fixture",
+        "confidence_interval": [
+          17.479999999999997,
+          19.32
+        ]
+      },
+      "id": "distance_route-composite",
+      "variant": "composite",
+      "locale": "en",
+      "uncertainty": "interval",
+      "secondary_intents": [
+        "uncertainty"
+      ]
+    },
+    {
+      "intent": "timeline",
+      "primary_question": "What happened, and in what order?",
+      "roles": [
+        "category",
+        "sequence"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "event-timeline",
+      "sample": {
+        "label": "Incident timeline",
+        "events": [
+          [
+            "09:10",
+            "Detected"
+          ],
+          [
+            "09:18",
+            "Confirmed"
+          ],
+          [
+            "09:31",
+            "Recovered"
+          ]
+        ],
+        "source": "incident fixture"
+      },
+      "id": "timeline-basic",
+      "variant": "basic",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "timeline",
+      "primary_question": "What happened, and in what order?",
+      "roles": [
+        "category",
+        "sequence"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "event-timeline",
+      "sample": {
+        "label": "Incident timeline——这是一个用于验证中文长标题自动换行、数字宽度和移动端可读性的案例",
+        "events": [
+          [
+            "09:10",
+            "Detected"
+          ],
+          [
+            "09:18",
+            "Confirmed"
+          ],
+          [
+            "09:31",
+            "Recovered"
+          ]
+        ],
+        "source": "incident fixture"
+      },
+      "id": "timeline-cjk_long",
+      "variant": "cjk_long",
+      "locale": "zh-CN",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "timeline",
+      "primary_question": "What happened, and in what order?",
+      "roles": [
+        "category",
+        "sequence"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "event-timeline",
+      "sample": {
+        "label": "Incident timeline",
+        "events": [
+          [
+            "09:10",
+            "Detected"
+          ],
+          [
+            "09:18",
+            "Confirmed"
+          ],
+          [
+            "09:31",
+            "Recovered"
+          ]
+        ]
+      },
+      "id": "timeline-missing_optional",
+      "variant": "missing_optional",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "timeline",
+      "primary_question": "What happened, and in what order?",
+      "roles": [
+        "category",
+        "sequence"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "event-timeline",
+      "sample": {
+        "label": "Incident timeline",
+        "events": [
+          [
+            "00:59:59.999",
+            "Stage 0 with long evidence"
+          ],
+          [
+            "01:59:59.999",
+            "Stage 1 with long evidence"
+          ],
+          [
+            "02:59:59.999",
+            "Stage 2 with long evidence"
+          ],
+          [
+            "03:59:59.999",
+            "Stage 3 with long evidence"
+          ],
+          [
+            "04:59:59.999",
+            "Stage 4 with long evidence"
+          ],
+          [
+            "05:59:59.999",
+            "Stage 5 with long evidence"
+          ],
+          [
+            "06:59:59.999",
+            "Stage 6 with long evidence"
+          ],
+          [
+            "07:59:59.999",
+            "Stage 7 with long evidence"
+          ],
+          [
+            "08:59:59.999",
+            "Stage 8 with long evidence"
+          ],
+          [
+            "09:59:59.999",
+            "Stage 9 with long evidence"
+          ],
+          [
+            "10:59:59.999",
+            "Stage 10 with long evidence"
+          ],
+          [
+            "11:59:59.999",
+            "Stage 11 with long evidence"
+          ]
+        ],
+        "source": "incident fixture"
+      },
+      "id": "timeline-extreme",
+      "variant": "extreme",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "timeline",
+      "primary_question": "What happened, and in what order?",
+      "roles": [
+        "category",
+        "sequence"
+      ],
+      "expected_medium": "image",
+      "expected_grammar": "event-timeline",
+      "sample": {
+        "label": "Incident timeline",
+        "events": [
+          [
+            "09:10",
+            "Detected"
+          ],
+          [
+            "09:18",
+            "Confirmed"
+          ],
+          [
+            "09:31",
+            "Recovered"
+          ]
+        ],
+        "source": "incident fixture",
+        "confidence": "medium"
+      },
+      "id": "timeline-composite",
+      "variant": "composite",
+      "locale": "en",
+      "uncertainty": "interval",
+      "secondary_intents": [
+        "uncertainty"
+      ]
+    },
+    {
+      "intent": "state_change",
+      "primary_question": "How did the state evolve?",
+      "roles": [
+        "category",
+        "scalar",
+        "series",
+        "threshold",
+        "unit"
+      ],
+      "expected_medium": "video",
+      "expected_grammar": "sequence-replay",
+      "sample": {
+        "label": "Threshold crossing",
+        "series": [
+          40,
+          48,
+          61,
+          79,
+          91
+        ],
+        "threshold": 80,
+        "unit": "%",
+        "source": "state fixture"
+      },
+      "id": "state_change-basic",
+      "variant": "basic",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "state_change",
+      "primary_question": "How did the state evolve?",
+      "roles": [
+        "category",
+        "scalar",
+        "series",
+        "threshold",
+        "unit"
+      ],
+      "expected_medium": "video",
+      "expected_grammar": "sequence-replay",
+      "sample": {
+        "label": "Threshold crossing——这是一个用于验证中文长标题自动换行、数字宽度和移动端可读性的案例",
+        "series": [
+          40,
+          48,
+          61,
+          79,
+          91
+        ],
+        "threshold": 80,
+        "unit": "%",
+        "source": "state fixture"
+      },
+      "id": "state_change-cjk_long",
+      "variant": "cjk_long",
+      "locale": "zh-CN",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "state_change",
+      "primary_question": "How did the state evolve?",
+      "roles": [
+        "category",
+        "scalar",
+        "series",
+        "threshold",
+        "unit"
+      ],
+      "expected_medium": "video",
+      "expected_grammar": "sequence-replay",
+      "sample": {
+        "label": "Threshold crossing",
+        "series": [
+          40,
+          48,
+          61,
+          79,
+          91
+        ],
+        "threshold": 80,
+        "unit": "%"
+      },
+      "id": "state_change-missing_optional",
+      "variant": "missing_optional",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "state_change",
+      "primary_question": "How did the state evolve?",
+      "roles": [
+        "category",
+        "scalar",
+        "series",
+        "threshold",
+        "unit"
+      ],
+      "expected_medium": "video",
+      "expected_grammar": "sequence-replay",
+      "sample": {
+        "label": "Threshold crossing",
+        "series": [
+          -12345.67,
+          1e-06,
+          79.999,
+          9999999999.999
+        ],
+        "threshold": 80,
+        "unit": "%",
+        "source": "state fixture"
+      },
+      "id": "state_change-extreme",
+      "variant": "extreme",
+      "locale": "en",
+      "uncertainty": "none"
+    },
+    {
+      "intent": "state_change",
+      "primary_question": "How did the state evolve?",
+      "roles": [
+        "category",
+        "scalar",
+        "series",
+        "threshold",
+        "unit"
+      ],
+      "expected_medium": "video",
+      "expected_grammar": "sequence-replay",
+      "sample": {
+        "label": "Threshold crossing",
+        "series": [
+          40,
+          48,
+          61,
+          79,
+          91
+        ],
+        "threshold": 80,
+        "unit": "%",
+        "source": "state fixture",
+        "confidence_interval": [
+          76.0,
+          84.0
+        ]
+      },
+      "id": "state_change-composite",
+      "variant": "composite",
+      "locale": "en",
+      "uncertainty": "interval",
+      "secondary_intents": [
+        "uncertainty"
+      ]
+    }
+  ]
+}

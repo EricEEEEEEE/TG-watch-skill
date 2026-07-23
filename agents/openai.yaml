@@ -1,7 +1,4 @@
 interface:
-  display_name: "TG Watch Anchor Card"
-  short_description: "Render Telegram anchor-price alert cards."
-  brand_color: "#F6AA3F"
-  default_prompt: "Use $tg-watch-anchor-price-card to create a Telegram photo-card alert for a wrapped asset discount."
-policy:
-  allow_implicit_invocation: true
+  display_name: "TG Watch Visual System"
+  short_description: "Compile any script into optimal Telegram visuals."
+  default_prompt: "Use $tg-watch-visual-system to inspect this script and implement its optimal Telegram-facing text, image, map, or motion visual with a verified fallback."
